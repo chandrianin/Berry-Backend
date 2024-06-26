@@ -74,37 +74,5 @@
     </form>
 </div>
 <img alt="berry" src="images/bigBerry.svg">
-<?php //// база данных, с ней потом
-//$container = 'db';
-//$useruser = 'root';
-//$password = 'itsaBASE';
-//$database = 'BASE';
-//$port = 3306;
-//
-//$babyBASE = new mysqli($container, $useruser, $password, $database, $port);
-//
-//foreach ($babyBASE->query("SELECT * FROM BASE.ad") as $row) {
-//    $category = $row['category'];
-//    $title = $row['title'];
-//    $description = $row['description'];
-//    $email = $row['email'];
-//    echo "<p> $email -> $title -> $description -> $category </p>";
-//}
-////for ($i = 1; $i < sizeof($response->getValues()); $i++) {
-////    $valuesInRow = array();
-////    echo "<p>";
-////    for ($j = 0; $j < 2; $j++) {
-////        if ($j < sizeof($response->getValues()[$i])) {
-////            echo  $response->getValues()[$i][$j]." ->  ";
-////        } else {
-////            echo "   ";
-////        }
-////    }
-////    if (2 < sizeof($response->getValues()[$i])) {
-////        echo $response->getValues()[$i][2];
-////    }
-////    echo "</p>";
-////}
-//?>
 </body>
 </html>
