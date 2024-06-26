@@ -4,8 +4,9 @@ CREATE DATABASE IF NOT EXISTS BASE;
 
 create table BASE.storyDays
 (
-    id        int auto_increment unique,
-    dayNumber int,
+    id             int auto_increment unique,
+    storyDayNumber int  not null,
+    lastRequestDay date not null,
     constraint storyDays_pk
         primary key (id)
 );
