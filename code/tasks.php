@@ -43,7 +43,7 @@
         }
         img {
             position: fixed;
-            height: 425px;
+            height: 560px;
             right: 0;
         }
     </style>
@@ -65,7 +65,7 @@
         <br>
         <label>
             Сколько раз необходимо поиграть:
-            <input name="ball" required type="int" placeholder="0">
+            <input name="ball" required type="number" placeholder="0">
         </label>
         <br>
         <label>
