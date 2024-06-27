@@ -7,58 +7,54 @@ $port = 3306;
 
 $babyBASE = new mysqli($container, $useruser, $password, $database, $port);
 
-if(empty($_GET['ID']))
+if(isset( $_GET['id'] ) && empty( $_GET['id'] ))
 {
     $stmt = $babyBASE->prepare("INSERT INTO  BASE.storyDays (storyDayNumber, lastRequestDay)VALUES (?, ?)");
-    $today = date("d.m.y");
+    $today = date("Y-m-d");
     $story = 1;
-    $stmt->bind_param("is",$story,  $today);
+    $stmt->bind_param("is",$story, $today);
     $stmt->execute();
 
-    $getID = "SELECT ID from BASE.storyDays";
+    $getID = "SELECT ID from BASE.storyDays ORDER BY ID DESC LIMIT 1;";
     $result = $babyBASE->query($getID);
-    if(TRUE === $result)
+    if (mysqli_num_rows($result) > 0)
     {
-        $rowsCount = $result->num_rows;
-        echo $result[$rowsCount];
+        while($row = mysqli_fetch_assoc($result))
+        {
+            echo $row["ID"];
+        }
     }
 }
 else
 {
-    $today = date("d.m.y");
-    $ID = $_GET['ID'];
-    $getID = "SELECT * from BASE.storyDays";
-
-    if($result = $babyBASE->query($getID))
+    $today = date("Y-m-d");
+    $ID = $_GET['id'];
+    $getInfo = "SELECT * from BASE.storyDays";
+    if($result = $babyBASE->query($getInfo))
     {
-        $rowsCount = $result->num_rows;
-        echo $result[$rowsCount];
         foreach($result as $row)
         {
-            if ($ID == $row['ID'])
-            {
-                if ($today != $row['lastRequestDay'])
-                {
-                    $sql = $babyBASE->prepare("UPDATE BASE.storyDays;
-                    SET lastRequestDay = $today, storyDayNumber = storyDayNumber + 1;
-                    WHERE ID=$ID");
+            if ($ID == $row['id']) {
+                if ($today != $row['lastRequestDay']) {
+                    $sql = $babyBASE->prepare("UPDATE BASE.storyDays
+                    SET lastRequestDay = ?, storyDayNumber = storyDayNumber + 1
+                    WHERE ID=?");
+                    $sql->bind_param("si", $today, $ID);
                     $sql->execute();
                 }
-                echo $row['storyDayNumber'];
-
-                $getTasks = "SELECT * from BASE.tasks";
-                if($dayTasks = $babyBASE->query($getTasks))
-                {
-                    foreach($dayTasks as $dayTask)
-                    {
-                        if ($today == $dayTask['day'])
-                        {
-                            echo $dayTask['chargeCount'];
-                            echo $dayTask['ballKickCount'];
-                        }
-                    }
-                }
+                echo $row['storyDayNumber'] . "<br>";
             }
+        }
+    }
+
+    $getTasks = "SELECT * from BASE.tasks";
+    $result = $babyBASE->query($getTasks);
+    if (mysqli_num_rows($result) > 0)
+    {
+        while($row = mysqli_fetch_assoc($result))
+        {
+            echo $row["chargeCount"] . "<br>";
+            echo $row["ballKickCount"] . "<br>";
         }
     }
 }
