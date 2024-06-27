@@ -10,13 +10,14 @@ $babyBASE = new mysqli($container, $useruser, $password, $database, $port);
 if(empty($_GET['ID']))
 {
     $stmt = $babyBASE->prepare("INSERT INTO  BASE.storyDays (storyDayNumber, lastRequestDay)VALUES (?, ?)");
-    $today = date("m.d.y");
+    $today = date("d.m.y");
     $story = 1;
     $stmt->bind_param("is",$story,  $today);
     $stmt->execute();
 
     $getID = "SELECT ID from BASE.storyDays";
-    if($result = $babyBASE->query($getID))
+    $result = $babyBASE->query($getID);
+    if(TRUE === $result)
     {
         $rowsCount = $result->num_rows;
         echo $result[$rowsCount];
@@ -24,7 +25,7 @@ if(empty($_GET['ID']))
 }
 else
 {
-    $today = date("m.d.y");
+    $today = date("d.m.y");
     $ID = $_GET['ID'];
     $getID = "SELECT * from BASE.storyDays";
 
