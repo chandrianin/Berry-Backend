@@ -9,7 +9,7 @@ $babyBASE = new mysqli($container, $useruser, $password, $database, $port);
 
 if(empty($_GET['ID']))
 {
-    $stmt = $babyBASE->prepare("INSERT INTO (storyDayNumber, lastRequestDay) BASE.storyDays VALUES (?, ?)");
+    $stmt = $babyBASE->prepare("INSERT INTO  BASE.storyDays (storyDayNumber, lastRequestDay)VALUES (?, ?)");
     $today = date("m.d.y");
     $story = 1;
     $stmt->bind_param("is",$story,  $today);
